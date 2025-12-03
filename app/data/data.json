@@ -1,0 +1,166 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "slug": "html",
+      "title": "HTML",
+      "description": "Apprenez à structurer vos pages web avec le langage de base du web : HTML. Balises, sémantique et bonnes pratiques incluses.",
+      "image": "/images/blog.png",
+      "posts": [
+        {
+          "id": 1,
+          "title": "Les bases du HTML pour débutants",
+          "slug": "bases-html-debutants",
+          "excerpt": "Découvrez comment créer votre première page web avec HTML, les balises essentielles et la structure de base.",
+          "readTime": "4 min",
+          "imageUrl": "/images/blog.png",
+          "views": 123
+        },
+        {
+          "id": 2,
+          "title": "Les balises HTML les plus utilisées en 2025",
+          "slug": "balises-html-2025",
+          "excerpt": "Apprenez quelles balises HTML sont toujours d’actualité et comment les utiliser efficacement pour améliorer la sémantique de votre site.",
+          "readTime": "3 min",
+          "imageUrl": "/images/blog.png",
+          "views": 88
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "slug": "css",
+      "title": "CSS",
+      "description": "Maitrisez la mise en forme de vos sites web avec CSS. Découvrez les sélecteurs, le positionnement et les animations.",
+      "image": "/images/blog.png",
+      "posts": [
+        {
+          "id": 3,
+          "title": "Flexbox et Grid : le duo ultime pour vos layouts",
+          "slug": "flexbox-grid-layouts",
+          "excerpt": "Apprenez à créer des mises en page modernes et responsives avec Flexbox et CSS Grid.",
+          "readTime": "5 min",
+          "imageUrl": "/images/blog.png",
+          "views": 201
+        },
+        {
+          "id": 4,
+          "title": "Créer des animations fluides avec CSS",
+          "slug": "animations-fluides-css",
+          "excerpt": "Les transitions et keyframes CSS permettent de donner vie à vos interfaces. Voici comment les utiliser simplement.",
+          "readTime": "4 min",
+          "imageUrl": "/images/posts/css2.png",
+          "views": 142
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "slug": "javascript",
+      "title": "JavaScript",
+      "description": "Le langage incontournable du web moderne. Manipulez le DOM, gérez les événements et créez des applications interactives.",
+      "image": "/images/blog.png",
+      "posts": [
+        {
+          "id": 5,
+          "title": "Comprendre les promesses et async/await",
+          "slug": "promesses-async-await",
+          "excerpt": "Simplifiez la gestion du code asynchrone avec les promesses et async/await.",
+          "readTime": "6 min",
+          "imageUrl": "/images/posts/js1.png",
+          "views": 305
+        },
+        {
+          "id": 6,
+          "title": "Les nouveautés ES2025 à connaître",
+          "slug": "nouveautes-es2025",
+          "excerpt": "Découvrez les dernières fonctionnalités du standard ECMAScript et comment elles facilitent le développement moderne.",
+          "readTime": "5 min",
+          "imageUrl": "/images/posts/js2.png",
+          "views": 256
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "slug": "react",
+      "title": "React",
+      "description": "Créez des interfaces dynamiques et performantes avec React. Apprenez à utiliser les hooks, le state management et le routing.",
+      "image": "/images/blog.png",
+      "posts": [
+        {
+          "id": 7,
+          "title": "Comprendre les hooks essentiels de React",
+          "slug": "hooks-essentiels-react",
+          "excerpt": "useState, useEffect, useMemo… Découvrez comment les hooks rendent React plus simple et plus puissant.",
+          "readTime": "5 min",
+          "imageUrl": "/images/posts/react1.png",
+          "views": 188
+        },
+        {
+          "id": 8,
+          "title": "Optimiser les performances de vos composants",
+          "slug": "optimiser-performances-react",
+          "excerpt": "Les astuces pour éviter les re-rendus inutiles et améliorer la vitesse de vos applications React.",
+          "readTime": "6 min",
+          "imageUrl": "/images/posts/react2.png",
+          "views": 150
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "slug": "nestjs",
+      "title": "NestJS",
+      "description": "Un framework backend Node.js basé sur TypeScript pour construire des API robustes et maintenables.",
+      "image": "/images/blog.png",
+      "posts": [
+        {
+          "id": 9,
+          "title": "Créer une API REST avec NestJS",
+          "slug": "api-rest-nestjs",
+          "excerpt": "Apprenez à créer une API REST complète avec NestJS, les modules et les services.",
+          "readTime": "7 min",
+          "imageUrl": "/images/posts/nest1.png",
+          "views": 177
+        },
+        {
+          "id": 10,
+          "title": "Gestion des erreurs et validation avec Pipes",
+          "slug": "gestion-erreurs-pipes-nestjs",
+          "excerpt": "Découvrez comment sécuriser et valider vos requêtes avec les Pipes et les Interceptors.",
+          "readTime": "6 min",
+          "imageUrl": "/images/posts/nest2.png",
+          "views": 132
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "slug": "nextjs",
+      "title": "Next.js",
+      "description": "Le framework React pour le web moderne : rendu côté serveur, génération statique et performances optimisées.",
+      "image": "/images/blog.png",
+      "posts": [
+        {
+          "id": 11,
+          "title": "Découverte de Next.js 15",
+          "slug": "decouverte-nextjs-15",
+          "excerpt": "Introduction aux nouveautés de la dernière version de Next.js : App Router, Server Actions et bien plus.",
+          "readTime": "6 min",
+          "imageUrl": "/images/posts/next1.png",
+          "views": 289
+        },
+        {
+          "id": 12,
+          "title": "SEO et performances avec Next.js",
+          "slug": "seo-performances-nextjs",
+          "excerpt": "Comment tirer parti du SSR et du SSG pour améliorer le référencement et les temps de chargement de vos pages.",
+          "readTime": "5 min",
+          "imageUrl": "/images/posts/next2.png",
+          "views": 211
+        }
+      ]
+    }
+  ]
+}
