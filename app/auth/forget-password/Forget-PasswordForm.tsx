@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import {toast} from 'sonner';
 import { authClient } from '@/lib/auth-client';
 import { useRouter } from 'next/navigation';
-import { auth } from '@/lib/auth';
 
 
 export  function ForgetPasswordForm() {
