@@ -2,19 +2,13 @@
 
 import {
   Search,
-  Code2,
-  Palette,
-  FileCode2,
-  Atom,
-  Boxes,
-  Layers,
 } from "lucide-react";
 import { useQueryState } from "nuqs";
 import { useQuery } from "@tanstack/react-query";
 import ArticleCard from "../../components/ui/ArticleCard";
 import type { Articles } from "../types/type";
 import SkeletonArticles from "@/components/ui/skeleton-articles";
-import type {Categories} from "@/types/type"
+import type {Categories} from "@/app/types/type"
 
 export default function PostsPage() {
   // --- États synchronisés avec l’URL ---

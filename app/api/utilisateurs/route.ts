@@ -1,9 +1,9 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export async function GET (req: NextRequest){
+export async function GET (){
 
   try {
 
@@ -18,7 +18,7 @@ export async function GET (req: NextRequest){
     return NextResponse.json(users, {status: 200})
 
   }catch (error) {
-    return NextResponse.json({message: "Erreur serveur"}, {status: 500})
+    return NextResponse.json({message: "Erreur serveur", error: String(error)}, {status: 500})
   }
 
 }

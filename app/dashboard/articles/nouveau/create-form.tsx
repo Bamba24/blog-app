@@ -83,7 +83,7 @@ export function CreateArticleForm({ id }: { id: string }) {
     }
 
 
-    const { data: categories, isLoading } = useQuery({
+    const { data: categories } = useQuery({
       queryKey: ["categories"],
       queryFn: async () => {
         const res = await fetch("/api/categories");

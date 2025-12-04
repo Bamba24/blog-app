@@ -1,7 +1,6 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
 import Link from "next/link";
 import ArticleCard from "@/components/ui/ArticleCard";
 import type { Categories } from "@/app/types/type";

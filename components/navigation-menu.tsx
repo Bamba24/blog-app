@@ -29,7 +29,7 @@ export function NavigationMenuDemo() {
   const isMobile = useIsMobile()
 
   // 🚀 Récupération avec useQuery
-    const { data = [], isLoading, error } = useQuery({
+    const { data = [] } = useQuery({
       queryKey: ["categories"],
       queryFn: async () => {
         const res = await fetch("/api/categories");

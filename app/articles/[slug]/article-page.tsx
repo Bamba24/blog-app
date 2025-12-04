@@ -134,7 +134,7 @@ export function ArticlePage({ slug }: { slug: string }) {
                 /* IMAGES */
                 img: ({ src, alt }) => (
                   <Image
-                    src={src || ""}
+                    src={typeof src === "string" ? src : ""}
                     alt={alt || ""}
                     width={900}
                     height={500}

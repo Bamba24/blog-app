@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import {CardHeader, CardTitle, CardDescription, CardContent, Card, CardFooter} from "@/components/ui/card";
+import {CardHeader, CardTitle, CardDescription, CardContent, Card} from "@/components/ui/card";
 import {ForgetPasswordForm} from "./Forget-PasswordForm"
 
 

@@ -10,7 +10,6 @@ import { signUp } from "@/lib/auth-client";
 import { useRouter } from "next/navigation"
 import { toast } from "sonner";
 import {Button} from "@/components/ui/button"
-import {Github} from "lucide-react"
 
 const formSchema = z.object({
  name: z.string().min(2, {

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { SignUpForm } from './signUp-Form';
-import {CardHeader, CardTitle, CardDescription, CardContent, Card, CardFooter, CardAction} from "@/components/ui/card"
+import {CardHeader, CardTitle, CardDescription, CardContent, Card, CardFooter} from "@/components/ui/card"
 import Link from 'next/link';
 
 

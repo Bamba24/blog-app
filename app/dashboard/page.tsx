@@ -36,7 +36,7 @@ export default function DashboardHome() {
     },
   });
 
-  if(user.role !== "ADMIN") {
+  if(user?.role !== "ADMIN") {
     route.push("/");
   }
 

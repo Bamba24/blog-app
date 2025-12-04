@@ -4,7 +4,7 @@ import {getUser} from "@/lib/auth-server";
 
 const prisma = new PrismaClient();
 
-export async function GET (req: NextRequest){
+export async function GET (){
 
   try {
 
@@ -17,7 +17,7 @@ export async function GET (req: NextRequest){
     return NextResponse.json(articles, {status: 200})
 
   }catch (error) {
-    return NextResponse.json({message: "Erreur serveur"}, {status: 500})
+    return NextResponse.json({message: "Erreur serveur", error: String(error)}, {status: 500})
   }
 
 }
@@ -65,7 +65,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(nouveauArticle, { status: 201 });
   } catch (error) {
     return NextResponse.json(
-      { message: "Erreur serveur" },
+      { message: "Erreur serveur", error: String(error) },
       { status: 500 }
     );
   }

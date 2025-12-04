@@ -23,7 +23,7 @@ export async function GET(
 
     return NextResponse.json(categorie, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ message: "Erreur serveur" }, { status: 500 });
+    return NextResponse.json({ message: "Erreur serveur", error: String(error) }, { status: 500 });
   }
 
 }
@@ -42,7 +42,7 @@ export async function DELETE(
 
     return NextResponse.json(deleted, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ message: "Erreur serveur" }, { status: 500 });
+    return NextResponse.json({ message: "Erreur serveur", error: String(error) }, { status: 500 });
   }
 }
 
@@ -68,6 +68,6 @@ export async function PATCH(
 
     return NextResponse.json(updated, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ message: "Erreur serveur" }, { status: 500 });
+    return NextResponse.json({ message: "Erreur serveur", error: String(error) }, { status: 500 });
   }
 }

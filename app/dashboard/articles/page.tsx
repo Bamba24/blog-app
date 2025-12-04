@@ -54,7 +54,7 @@ export default function PostsPage() {
     }),
   ];
 
-  const { data = [], isLoading } = useQuery({
+  const { data = [] } = useQuery({
     queryKey: ["articles"],
     queryFn: async () => {
       const res = await fetch("/api/articles");
@@ -77,6 +77,7 @@ export default function PostsPage() {
     },
   });
 
+  // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
     data,
     columns,
