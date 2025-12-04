@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import {toast} from 'sonner';
 import { authClient } from '@/lib/auth-client';
 import { useRouter } from 'next/navigation';
+import { auth } from '@/lib/auth';
 
 
 export  function ForgetPasswordForm() {
@@ -16,8 +17,9 @@ export  function ForgetPasswordForm() {
     async function  onSubmit(formdata: FormData) {
 
       const email = formdata.get('email') as string
+
       
-       await authClient.forgetPassword({
+       await authClient.requestPasswordReset({
         email: email,
         redirectTo:"/auth/reset-password"
        }, {
