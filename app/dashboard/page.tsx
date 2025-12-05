@@ -4,46 +4,92 @@ import { useQuery } from "@tanstack/react-query";
 import type { User } from "../types/type";
 import { useSession } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
+// ----------------------------------------------------
+// 🛡️ Hook de protection Admin (optionnel mais propre)
+// ----------------------------------------------------
+function useAdminGuard() {
+  const router = useRouter();
+  const { data: session, isPending: sessionPending } = useSession();
+
+  useEffect(() => {
+    if (!sessionPending && !session) {
+      router.push("/signIn");
+    }
+  }, [session, sessionPending, router]);
+
+  return session;
+}
+
+// ----------------------------------------------------
+// 🧭 Component principal : Dashboard Admin
+// ----------------------------------------------------
 export default function DashboardHome() {
+  const router = useRouter();
 
-  const route = useRouter();
-  const {data: session} = useSession();
+  // Session protégée
+  const session = useAdminGuard();
   const userSession = session?.user;
   const id = userSession?.id;
 
-  if(!session) {
-    route.push("/signIn");
-  }
+  // --------------------------------------------
+  // 🔹 Récupération du User connecté (rôle, etc.)
+  // --------------------------------------------
+  const {
+    data: user,
+    isLoading: userLoading,
+    isError: userError,
+  } = useQuery<User>({
+    queryKey: ["utilisateur", id],
+    queryFn: async () => {
+      const res = await fetch(`/api/utilisateurs/${id}`);
+      if (!res.ok) throw new Error("Erreur chargement utilisateur");
+      return res.json();
+    },
+    enabled: !!id, // 👉 NE CHARGE QUE si on a l'id
+  });
 
-  // ✅ useQuery pour récupérer les utilisateurs depuis Prisma
-    const { data: user} = useQuery<User>({
-      queryKey: ["utilisateur", id],
-      queryFn: async () => {
-        const res = await fetch(`/api/utilisateurs/${id}`);
-        if (!res.ok) throw new Error("Erreur chargement utilisateurs");
-        return res.json();
-      },
-    });
+  // ------------------------------------------------
+  // 🔐 Vérifier le rôle Admin (protection)
+  // ------------------------------------------------
+  useEffect(() => {
+    if (!userLoading && user && user.role !== "ADMIN") {
+      router.push("/"); // Retour à l'accueil si pas admin
+    }
+  }, [user, userLoading, router]);
 
-  // 🔐 Récupération session Better Auth
-  const { data, isLoading, isError } = useQuery({
+  // --------------------------------------------
+  // 📊 Stats Admin (activé UNIQUEMENT si Admin)
+  // --------------------------------------------
+  const {
+    data,
+    isLoading: statsLoading,
+    isError: statsError,
+  } = useQuery({
     queryKey: ["stats"],
     queryFn: async () => {
       const res = await fetch("/api/stats");
       if (!res.ok) throw new Error("Erreur serveur");
       return res.json();
     },
+    enabled: !!user && user.role === "ADMIN", // 👉 Charge seulement si admin
   });
 
-  if(user?.role !== "ADMIN") {
-    route.push("/");
+  // ----------------------------------------------------
+  // 🕗 Gestion des chargements globales
+  // ----------------------------------------------------
+  if (session === undefined || userLoading) {
+    return <p>Chargement...</p>;
   }
 
+  if (userError || statsError) {
+    return <p>Une erreur est survenue.</p>;
+  }
 
-  if (isLoading) return <p>Chargement...</p>;
-  if (isError) return <p>Impossible de charger le tableau de bord.</p>;
-
+  // ----------------------------------------------------
+  // 🎉 Interface ADMIN
+  // ----------------------------------------------------
   return (
     <>
       <div className="mb-4">
@@ -93,9 +139,9 @@ export default function DashboardHome() {
           <div className="p-6 border rounded-2xl shadow">
             <h2 className="text-xl font-semibold mb-4">Derniers utilisateurs</h2>
             <ul className="space-y-2">
-              {data.latestUsers.map((user: User, i: number) => (
+              {data.latestUsers.map((u: User, i: number) => (
                 <li key={i} className="border p-2 rounded-lg">
-                  {user.name ?? "Utilisateur"} — {user.email}
+                  {u.name ?? "Utilisateur"} — {u.email}
                 </li>
               ))}
             </ul>
