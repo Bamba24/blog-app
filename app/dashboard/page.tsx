@@ -3,93 +3,37 @@
 import { useQuery } from "@tanstack/react-query";
 import type { User } from "../types/type";
 import { useSession } from "@/lib/auth-client";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
-// ----------------------------------------------------
-// 🛡️ Hook de protection Admin (optionnel mais propre)
-// ----------------------------------------------------
-function useAdminGuard() {
-  const router = useRouter();
-  const { data: session, isPending: sessionPending } = useSession();
-
-  useEffect(() => {
-    if (!sessionPending && !session) {
-      router.push("/signIn");
-    }
-  }, [session, sessionPending, router]);
-
-  return session;
-}
-
-// ----------------------------------------------------
-// 🧭 Component principal : Dashboard Admin
-// ----------------------------------------------------
 export default function DashboardHome() {
-  const router = useRouter();
 
-  // Session protégée
-  const session = useAdminGuard();
+  const { data: session } = useSession();
   const userSession = session?.user;
   const id = userSession?.id;
 
-  // --------------------------------------------
-  // 🔹 Récupération du User connecté (rôle, etc.)
-  // --------------------------------------------
-  const {
-    data: user,
-    isLoading: userLoading,
-    isError: userError,
-  } = useQuery<User>({
-    queryKey: ["utilisateur", id],
+  // Récupération user via Prisma
+  const { data: users } = useQuery<User>({
+    queryKey: ["utilisateurs", id],
     queryFn: async () => {
-      const res = await fetch(`/api/utilisateurs/${id}`);
-      if (!res.ok) throw new Error("Erreur chargement utilisateur");
+      const res = await fetch(`/api/utilisateurs`);
+      if (!res.ok) throw new Error("Erreur chargement utilisateurs");
       return res.json();
     },
-    enabled: !!id, // 👉 NE CHARGE QUE si on a l'id
+    enabled: !!id, // évite les requêtes inutiles
   });
 
-  // ------------------------------------------------
-  // 🔐 Vérifier le rôle Admin (protection)
-  // ------------------------------------------------
-  useEffect(() => {
-    if (!userLoading && user && user.role !== "ADMIN") {
-      router.push("/"); // Retour à l'accueil si pas admin
-    }
-  }, [user, userLoading, router]);
-
-  // --------------------------------------------
-  // 📊 Stats Admin (activé UNIQUEMENT si Admin)
-  // --------------------------------------------
-  const {
-    data,
-    isLoading: statsLoading,
-    isError: statsError,
-  } = useQuery({
+  // Récupération statistiques
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["stats"],
     queryFn: async () => {
       const res = await fetch("/api/stats");
       if (!res.ok) throw new Error("Erreur serveur");
       return res.json();
     },
-    enabled: !!user && user.role === "ADMIN", // 👉 Charge seulement si admin
   });
 
-  // ----------------------------------------------------
-  // 🕗 Gestion des chargements globales
-  // ----------------------------------------------------
-  if (session === undefined || userLoading) {
-    return <p>Chargement...</p>;
-  }
+  if (isLoading) return <p>Chargement...</p>;
+  if (isError) return <p>Impossible de charger le tableau de bord.</p>;
 
-  if (userError || statsError) {
-    return <p>Une erreur est survenue.</p>;
-  }
-
-  // ----------------------------------------------------
-  // 🎉 Interface ADMIN
-  // ----------------------------------------------------
   return (
     <>
       <div className="mb-4">
@@ -139,9 +83,9 @@ export default function DashboardHome() {
           <div className="p-6 border rounded-2xl shadow">
             <h2 className="text-xl font-semibold mb-4">Derniers utilisateurs</h2>
             <ul className="space-y-2">
-              {data.latestUsers.map((u: User, i: number) => (
+              {data.latestUsers.map((user: User, i: number) => (
                 <li key={i} className="border p-2 rounded-lg">
-                  {u.name ?? "Utilisateur"} — {u.email}
+                  {users.name ?? "Utilisateur"} — {users.email}
                 </li>
               ))}
             </ul>
