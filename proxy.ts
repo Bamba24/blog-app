@@ -1,33 +1,47 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { auth } from "@/lib/auth";
+import { PrismaClient } from "@prisma/client";
 
-export async function proxy(request: NextRequest) {
-  const url = request.nextUrl;
+const prisma = new PrismaClient();
 
-  // 1. Vérifier session via BetterAuth (cookies)
-  const session = request.cookies.get("better-auth.sessionToken")?.value;
+export async function proxy(req: NextRequest) {
+  // Récupération session Better Auth
+  const session = await auth.api.getSession({
+    headers: req.headers,
+  });
 
-  // Pas de session → redirect login
-  if (!session && url.pathname.startsWith("/dashboard")) {
-    url.pathname = "/signIn";
-    return NextResponse.redirect(url);
+  const pathname = req.nextUrl.pathname;
+
+  // Si pas de session → redirection login
+  if (!session?.user?.id) {
+    if (pathname.startsWith("/dashboard")) {
+      return NextResponse.redirect(new URL("/signIn", req.url));
+    }
+    return NextResponse.next();
   }
 
-  // 2. Vérification du rôle
-  if (url.pathname.startsWith("/dashboard")) {
-    const userReq = await fetch(`${request.nextUrl.origin}/api/me`, {
-      headers: {
-        Cookie: request.headers.get("cookie") || "",
-      },
-    });
+  // Si l’utilisateur va au dashboard → Vérifier rôle en BDD
+  if (pathname.startsWith("/dashboard")) {
+    try {
+      const user = await prisma.user.findUnique({
+        where: { id: session.user.id },
+        select: { role: true },
+      });
 
-    const user = await userReq.json();
+      if (!user || user.role !== "ADMIN") {
+        return NextResponse.redirect(new URL("/", req.url));
+      }
 
-    if (!user || user.role !== "ADMIN") {
-      url.pathname = "/";
-      return NextResponse.redirect(url);
+    } catch (err) {
+      console.error("Erreur middleware:", err);
+      return NextResponse.redirect(new URL("/signIn", req.url));
     }
   }
 
   return NextResponse.next();
 }
+
+export const config = {
+  matcher: ["/dashboard/:path*"],
+};
