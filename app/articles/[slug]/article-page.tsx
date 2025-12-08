@@ -60,7 +60,7 @@ export function ArticlePage({ slug }: { slug: string }) {
 
   return (
     <div className="flex min-h-screen justify-center bg-zinc-50 dark:bg-black">
-      <main className="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-[1fr_250px] py-16 gap-12">
+      <main className="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-[1fr_250px] py-16 gap-12 px-6 sm:px-6 lg:px-8">
         
         {/* --- Contenu principal --- */}
         <div className="flex-1">

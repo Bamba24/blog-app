@@ -35,7 +35,7 @@ export  function CategoriesPage({slug}: {slug: string}) {
 
   return (
     <div className="flex min-h-screen justify-center bg-zinc-50 dark:bg-black font-sans">
-      <main className="flex w-full max-w-5xl flex-col py-16">
+      <main className="flex w-full max-w-5xl flex-col py-16 px-6 sm:px-6 lg:px-8">
         {/* --- Header Catégorie --- */}
         <div className="flex flex-col justify-between sm:flex-row items-center gap-8 mb-12 ">
          

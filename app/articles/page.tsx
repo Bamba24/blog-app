@@ -74,7 +74,7 @@ export default function PostsPage() {
   // --- Rendu ---
   return (
     <div className="flex min-h-screen justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex w-full max-w-5xl flex-col items-center sm:items-start py-24 ">
+      <main className="flex w-full max-w-5xl flex-col items-center sm:items-start py-24 px-6 sm:px-6 lg:px-8">
         {/* --- Titre --- */}
         <section className="mb-12 text-center sm:text-left w-full">
           <h1 className=" font-serif text-4xl font-bold text-black dark:text-white mb-4">

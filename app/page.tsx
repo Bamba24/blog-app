@@ -23,12 +23,12 @@ export default function Home() {
     
     
   return (
-    <div className="flex min-h-screen justify-center bg-zinc-50 dark:bg-black">
+    <div className="flex min-h-screen justify-center bg-zinc-50 dark:bg-black0 px-6 sm:px-6 lg:px-8">
       <main className="font-sans flex w-full max-w-5xl flex-col items-center sm:items-start py-24">
 
         {/* --- Présentation --- */}
         <section className="mb-16 text-center sm:text-left">
-          <h1 className="font-serif text-4xl font-bold text-black dark:text-white mb-4">
+          <h1 className="font-serif text-4xl font-bold text-black dark:text-white mb-4 px-6 sm:px-6 lg:px-8">
             Bienvenue sur mon blog
           </h1>
           <p className="text-lg text-zinc-600 dark:text-zinc-400 max-w-2xl">
@@ -37,7 +37,7 @@ export default function Home() {
         </section>
 
         {/* --- 🔥 Derniers articles --- */}
-        <section className="mb-20 w-full">
+        <section className="mb-20  sm:w-full">
           <h2 className="font-serif text-2xl font-semibold text-black dark:text-white mb-6">
             Derniers articles
           </h2>

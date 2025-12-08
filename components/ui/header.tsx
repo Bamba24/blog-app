@@ -12,7 +12,7 @@ import {NavigationMenuDemo} from "@/components/navigation-menu";
 
 export default function Header() {
   return (
-    <header className="flex justify-between items-center bg-white">
+    <header className="flex justify-between items-center bg-white px-6 sm:px-6 lg:px-8">
       <nav className="flex w-full max-w-5xl justify-between items-center mx-auto py-4">
         <span className="font-bold">Blog Dev</span>
 
