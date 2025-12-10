@@ -194,7 +194,11 @@ export function CreateArticleForm({ id }: { id: string }) {
             <FormItem>
               <FormLabel>Contenus de l&apos;article</FormLabel>
               <FormControl>
-                <Input placeholder="contenus" {...field} />
+                <textarea
+                    {...field}
+                    className="w-full h-96 p-2 border rounded"
+                    placeholder="Écris ton article en Markdown ici..."
+                  />
               </FormControl>
               <FormMessage />
             </FormItem>

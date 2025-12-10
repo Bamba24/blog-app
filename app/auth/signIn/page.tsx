@@ -1,12 +1,19 @@
-import type { Metadata } from 'next';
+import type { Metadata } from "next";
 import { SignInForm } from "./signIn-Form";
-import {CardHeader, CardTitle, CardDescription, CardContent, Card, CardFooter} from "@/components/ui/card"
-import Link from 'next/link';
-
+import { CardHeader, CardTitle, CardDescription, CardContent, Card, CardFooter } from "@/components/ui/card";
+import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: 'Sign In - MyApp',
-  description: 'Create a new account on MyApp.',
+  title: "Connexion - MyApp",
+  description: "Connectez-vous à votre compte MyApp.",
+  keywords: ["login", "auth", "connexion", "MyApp"],
+  openGraph: {
+    title: "Connexion - MyApp",
+    description: "Connectez-vous à votre compte MyApp.",
+    url: "https://myapp.com/auth/signin",
+    type: "website",
+    siteName: "MyApp",
+  },
 };
 
 export default function SignInPage() {
@@ -21,7 +28,9 @@ export default function SignInPage() {
       </CardContent>
       <CardFooter>
         <p>Do you have any account ?</p>
-        <Link href="/auth/signUp" className="text-muted-foreground hover:underline ml-2">Sign Up</Link>
+        <Link href="/auth/signUp" className="text-muted-foreground hover:underline ml-2">
+          Sign Up
+        </Link>
       </CardFooter>
     </Card>
   );

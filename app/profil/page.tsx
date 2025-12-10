@@ -1,9 +1,29 @@
+import type { Metadata } from "next";
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { getUser } from '@/lib/auth-server';
 import { Mail, User, Edit } from 'lucide-react';
 import Link from 'next/link';
+
+export const metadata: Metadata = {
+  title: "Profil utilisateur - MyApp",
+  description: "Consultez et éditez les informations de votre profil MyApp.",
+  keywords: ["profil utilisateur", "blog", "compte", "information profil"],
+  openGraph: {
+    title: "Profil utilisateur - MyApp",
+    description: "Consultez et éditez les informations de votre profil MyApp.",
+    url: "https://myapp.com/profile",
+    type: "website",
+    siteName: "mon blog tech",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Profil utilisateur - MyApp",
+    description: "Consultez et éditez les informations de votre profil MyApp.",
+    images: ["/images/logo_blog.png"],
+  },
+};
 
 export default async function InformationProfil() {
   const user = await getUser();
@@ -19,7 +39,6 @@ export default async function InformationProfil() {
   return (
     <Card className="w-full max-w-xl mx-auto mt-24 shadow-md rounded-2xl">
       <CardHeader className="flex flex-col items-center gap-3">
-        
         {/* Avatar */}
         <Avatar className="w-20 h-20">
           <AvatarFallback className="text-xl">
@@ -45,7 +64,6 @@ export default async function InformationProfil() {
       </CardHeader>
 
       <CardContent className="space-y-5 mt-5">
-
         {/* Name */}
         <div className="flex items-center gap-3">
           <User className="text-gray-500" size={20} />
@@ -63,7 +81,6 @@ export default async function InformationProfil() {
             <p className="text-lg font-medium">{user.email}</p>
           </div>
         </div>
-
       </CardContent>
     </Card>
   );

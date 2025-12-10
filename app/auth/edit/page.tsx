@@ -1,6 +1,26 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { getUser } from '@/lib/auth-server';
-import AccountForm from './account-form';
+import type { Metadata } from "next";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { getUser } from "@/lib/auth-server";
+import AccountForm from "./account-form";
+
+export const metadata: Metadata = {
+  title: "Mon profil - MyApp",
+  description: "Consultez et modifiez les informations de votre profil MyApp.",
+  keywords: ["profil", "account", "user", "MyApp", "compte"],
+  openGraph: {
+    title: "Mon profil - MyApp",
+    description: "Consultez et modifiez les informations de votre profil MyApp.",
+    url: "https://myapp.com/account/profile",
+    type: "website",
+    siteName: "MyApp",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Mon profil - MyApp",
+    description: "Consultez et modifiez les informations de votre profil MyApp.",
+    images: ["/images/logo_blog.png"], // logo ou image branding
+  },
+};
 
 export default async function InformationProfil() {
   const user = await getUser();
@@ -16,10 +36,12 @@ export default async function InformationProfil() {
         <CardDescription>Edit profile</CardDescription>
       </CardHeader>
       <CardContent>
-        <AccountForm defaultValues={{
-          name: user.name || "",
-          image: user.image || ""
-        }} />
+        <AccountForm
+          defaultValues={{
+            name: user.name || "",
+            image: user.image || "",
+          }}
+        />
       </CardContent>
     </Card>
   );

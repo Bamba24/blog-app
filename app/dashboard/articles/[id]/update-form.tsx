@@ -20,6 +20,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import type { Articles } from "@/app/types/type";
+import type { Categories } from "@/app/types/type";
 
 const formSchema = z.object({
   titre: z.string().min(5, "Ajouter un titre valide"),
@@ -28,6 +29,7 @@ const formSchema = z.object({
   contenus: z.string().min(100, "Le contenu doit faire au moins 100 caractères"),
   readTime: z.string(),
   imageUrl: z.string().url(),
+  idCategory: z.string().min(1, "Sélectionner une catégorie"),
 });
 
 export function UpdateArticleForm({id}: {id: string}) {
@@ -43,6 +45,7 @@ export function UpdateArticleForm({id}: {id: string}) {
       contenus: "",
       readTime: "5 min",
       imageUrl: "",
+      idCategory: "",
     },
   });
 
@@ -62,6 +65,16 @@ export function UpdateArticleForm({id}: {id: string}) {
       setUploading(false);
       return data.secure_url; // URL Cloudinary
     }
+
+
+     const { data: categories } = useQuery({
+          queryKey: ["categories"],
+          queryFn: async () => {
+            const res = await fetch("/api/categories");
+            if (!res.ok) throw new Error("Erreur");
+            return res.json();
+          }
+        });
 
   // 1️⃣ Récupération de l'article
   const { data: article, isLoading } = useQuery<Articles | null>({
@@ -182,6 +195,28 @@ export function UpdateArticleForm({id}: {id: string}) {
             </FormItem>
           )}
         />
+
+        <FormField
+          control={form.control}
+          name="idCategory"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Catégorie</FormLabel>
+              <FormControl>
+                <select {...field} className="border rounded p-2 w-full">
+                  <option value="">-- Choisir une catégorie --</option>
+                  {categories?.map((cat: Categories) => (
+                    <option key={cat.id} value={cat.id}>
+                      {cat.titre}
+                    </option>
+                  ))}
+                </select>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+       />
+
 
         <FormField
                          control={form.control}
