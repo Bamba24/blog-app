@@ -43,7 +43,6 @@ export  function SignInForm () {
      }, {
       onSuccess:  ()=> {
         router.push('/auth');
-        router.refresh();
         toast.success("Signed in successfully.");
       }, 
       onError: (error)=>{
@@ -61,7 +60,6 @@ export  function SignInForm () {
      }, {
       onSuccess:  ()=> {
         router.push('/profil');
-        router.refresh(); 
         toast.success("Signed in successfully with Github.");
       }, 
       onError: (error)=>{
@@ -78,7 +76,6 @@ export  function SignInForm () {
      }, {
       onSuccess:  ()=> {
         router.push('/profil');
-        router.refresh(); 
         toast.success("Signed in successfully with Google.");
       }, 
       onError: (error)=>{

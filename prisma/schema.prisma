@@ -105,6 +105,7 @@ model Articles {
   imageUrl    String?
   tags        String?
   vues        Int          @default(0)
+  imagePublicId String?
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
 

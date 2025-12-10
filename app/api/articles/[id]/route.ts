@@ -1,5 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { v2 as cloudinary } from "cloudinary";
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
+  api_key: process.env.CLOUDINARY_API_KEY!,
+  api_secret: process.env.CLOUDINARY_API_SECRET!,
+});
 
 const prisma = new PrismaClient();
 
@@ -10,6 +17,7 @@ export async function GET(
 ) {
   
   const id = (await params).id;
+
   try {
     const article = await prisma.articles.findUnique({
       where: { id },
@@ -28,22 +36,55 @@ export async function GET(
 }
 
 
-export async function DELETE(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  const articleId = (await params).id;
+// export async function DELETE(
+//   req: NextRequest,
+//   { params }: { params: Promise<{ id: string }> }
+// ) {
+//   const articleId = (await params).id;
 
+//   try {
+//     const deletedArticle = await prisma.articles.delete({
+//       where: { id: articleId },
+//     });
+
+//     return NextResponse.json(deletedArticle, { status: 200 });
+//   } catch (error) {
+//     return NextResponse.json({ message: "Erreur serveur", error: String(error) }, { status: 500 });
+//   }
+// }
+
+
+
+export async function DELETE(req: Request, { params }: {params: Promise<{id: string}>}) {
   try {
-    const deletedArticle = await prisma.articles.delete({
-      where: { id: articleId },
+    const id  = (await params).id;
+
+    // 1️⃣ Récupérer l'article
+    const article = await prisma.articles.findUnique({
+      where: { id },
     });
 
-    return NextResponse.json(deletedArticle, { status: 200 });
+    if (!article) {
+      return NextResponse.json({ error: "Article introuvable" }, { status: 404 });
+    }
+
+    // 2️⃣ Supprimer l'image Cloudinary
+    if (article.imagePublicId) {
+      await cloudinary.uploader.destroy(article.imagePublicId);
+    }
+
+    // 3️⃣ Supprimer l'article dans la DB
+    await prisma.articles.delete({ where: { id } });
+
+    return NextResponse.json({ message: "Article supprimé avec succès !" });
   } catch (error) {
-    return NextResponse.json({ message: "Erreur serveur", error: String(error) }, { status: 500 });
+    return NextResponse.json(
+      { error: "Erreur lors de la suppression", details: String(error) },
+      { status: 500 }
+    );
   }
 }
+
 
 
 export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string } >}) {

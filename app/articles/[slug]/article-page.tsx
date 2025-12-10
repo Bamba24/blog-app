@@ -1,9 +1,9 @@
 "use client";
 
-import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
@@ -80,6 +80,8 @@ export function ArticlePage({ slug }: { slug: string }) {
             alt={article.titre}
             width={800}
             height={200}
+            priority // ⚡ LCP optimisé
+            fetchPriority="high"
             className="rounded-lg mb-8 max-h-50 object-cover w-full"
           />
 

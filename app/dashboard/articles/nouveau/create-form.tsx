@@ -25,6 +25,7 @@ const formSchema = z.object({
   tags: z.string().min(3, "Ajouter au moins un tag"),
   idCategory: z.string().min(1, "Sélectionner une catégorie"),
   auteurId: z.string().min(1, "Auteur requis"),
+  imagePublicId: z.string(),
 });
 
 export function CreateArticleForm({ id }: { id: string }) {
@@ -44,6 +45,8 @@ export function CreateArticleForm({ id }: { id: string }) {
       imageUrl: "",
       auteurId: id,
       idCategory: "",
+      imagePublicId: "",
+
     },
   });
 
@@ -79,14 +82,17 @@ export function CreateArticleForm({ id }: { id: string }) {
 
       const data = await res.json();
       setUploading(false);
-      return data.secure_url; // URL Cloudinary
+      return {
+           url: data.secure_url,
+           publicId: data.public_id,
+      }; // URL Cloudinary
     }
 
 
     const { data: categories } = useQuery({
       queryKey: ["categories"],
       queryFn: async () => {
-        const res = await fetch("/api/categories");
+        const res = await fetch("/api/categories", {cache: "no-cache"});
         if (!res.ok) throw new Error("Erreur");
         return res.json();
       }
@@ -99,6 +105,7 @@ export function CreateArticleForm({ id }: { id: string }) {
         const res = await fetch("/api/articles", {
         method: "POST",
         body: JSON.stringify(values),
+        cache: "no-cache"
       });
       
       if (!res.ok) throw new Error("Erreur lors de la création de l’article");
@@ -257,8 +264,11 @@ export function CreateArticleForm({ id }: { id: string }) {
                       const file = e.target.files?.[0];
                       if (!file) return;
 
-                      const url = await uploadImage(file);
-                      field.onChange(url);
+                      const upload = await uploadImage(file);
+                      
+                      form.setValue("imageUrl", upload.url);
+                      form.setValue("imagePublicId", upload.publicId);
+                      field.onChange(upload);
                     }}
                   />
                 </FormControl>

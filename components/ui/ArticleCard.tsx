@@ -33,6 +33,8 @@ export default function ArticleCard({
             src={imageUrl}
             alt={titre}
             fill
+            priority 
+            fetchPriority="high"
             className="object-cover rounded-lg"
           />
         </div>

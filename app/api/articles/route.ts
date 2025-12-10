@@ -56,6 +56,7 @@ export async function POST(req: NextRequest) {
         vues: body.vues,
         categoryId: body.idCategory, 
         auteurId: body.auteurId, 
+        imagePublicId: body.publicId
       },
       include: {
         category: true,

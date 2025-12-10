@@ -10,7 +10,7 @@ export default function Home() {
   const { data: articles, isLoading } = useQuery({
     queryKey: ["articles"],
     queryFn: async () => {
-      const res = await fetch("/api/articles");
+      const res = await fetch("/api/articles", {cache: "no-cache"});
       return res.json();
     },
   });
@@ -49,12 +49,12 @@ export default function Home() {
       </Head>
 
       {/* === Ton contenu === */}
-      <div className="flex min-h-screen justify-center bg-zinc-50 dark:bg-black0 px-6 sm:px-6 lg:px-8">
-        <main className="font-sans flex w-full max-w-5xl flex-col items-center sm:items-start py-24">
+      <div className="flex min-h-screen justify-center bg-zinc-50 dark:bg-black0 ">
+        <main className="font-sans flex w-full max-w-5xl flex-col items-center sm:items-start py-24 px-6 sm:px-6 lg:px-8">
 
           {/* --- Présentation --- */}
           <section className="mb-16 text-center sm:text-left">
-            <h1 className="font-serif text-4xl font-bold text-black dark:text-white mb-4 px-6 sm:px-6 lg:px-8">
+            <h1 className="font-serif text-4xl font-bold text-black dark:text-white mb-4 ">
               Bienvenue sur mon blog
             </h1>
             <p className="text-lg text-zinc-600 dark:text-zinc-400 max-w-2xl">
